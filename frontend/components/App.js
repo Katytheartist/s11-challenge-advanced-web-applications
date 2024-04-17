@@ -90,12 +90,12 @@ export default function App() {
     setSpinnerOn(true)
     axios().post(articlesUrl, article)
     .then(res=>{
-      setArticles(res.data.articles)
-      setMessage(res.data.message)
-
+      const {data} = res
+      setArticles([...articles, data.article])
+      setMessage(data.message)
     }) .catch(err=>{
       console.log(err)
-      setMessage(err.response.data.message)
+      setMessage('Bummer, looks like an error occurred.')
     }) .finally(()=>{
       setSpinnerOn(false)})
   }
@@ -105,10 +105,11 @@ export default function App() {
     // You got this!
     setMessage('')
     setSpinnerOn(true)
-    axios().put(articlesUrl + '/' + article_id, article)
+    axios().put(`${articlesUrl}/${article_id}`, article)
     .then(res=>{
-      setArticles(articles => articles.map(art => art.article_id === article_id ? res.data.article : art))
-      setMessage(res.data.message)
+      const {data} = res
+      setArticles(articles => articles.map(art => art.article_id === article_id ? data.article : art))
+      setMessage(data.message)
     }) .catch(err=>{
       setMessage(err.response.data.message)
     }) .finally(()=>{

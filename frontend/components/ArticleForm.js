@@ -46,6 +46,7 @@ export default function ArticleForm(props) {
       postArticle(values)
       setCurrentArticleId()
     }
+    getArticles()
     setValues(initialFormValues)
   }
 
