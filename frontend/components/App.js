@@ -103,10 +103,30 @@ export default function App() {
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
+    setMessage('')
+    setSpinnerOn(true)
+    axios().put(articlesUrl + '/' + article_id, article)
+    .then(res=>{
+      setArticles(articles => articles.map(art => art.article_id === article_id ? res.data.article : art))
+      setMessage(res.data.message)
+    }) .catch(err=>{
+      setMessage(err.response.data.message)
+    }) .finally(()=>{
+      setSpinnerOn(false)})
   }
 
   const deleteArticle = article_id => {
     // ✨ implement
+    setMessage('')
+    setSpinnerOn(true)
+    axios().delete(articlesUrl + '/' + article_id)
+    .then(res=>{
+      setArticles(articles.filter(ar => ar.article_id !== article_id))
+      setMessage(res.data.message)
+    }) .catch(err=>{
+      setMessage(err.response.data.message)
+    }) .finally(()=>{
+      setSpinnerOn(false)})
   }
 
   return (

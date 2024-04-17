@@ -7,8 +7,7 @@ export default function Articles(props) {
   //const navigate = Navigate()
   const token = localStorage.getItem('token')
   // ✨ where are my props? Destructure them here
-  const {articles,
-  getArticles, deleteArticle, setCurrentArticleId } = props
+  const {articles, getArticles, deleteArticle, setCurrentArticleId, currentArticleId } = props
   if(!token){
     return <Navigate to="/" />
   }
@@ -26,7 +25,7 @@ export default function Articles(props) {
     <div className="articles">
       <h2>Articles</h2>
       {
-        !articles?.length
+         !articles?.length
           ? 'No articles yet'
           : articles.map(art => {
             return (
@@ -37,8 +36,8 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button  onClick={()=>setCurrentArticleId(art.article_id)}>Edit</button>
-                  <button  onClick={()=>deleteArticle(art.article_id)}>Delete</button>
+                  <button disabled={currentArticleId ? true : false} onClick={()=>setCurrentArticleId(art.article_id)}>Edit</button>
+                  <button disabled={currentArticleId ? true : false} onClick={()=>deleteArticle(art.article_id)}>Delete</button>
                 </div>
               </div>
             )
